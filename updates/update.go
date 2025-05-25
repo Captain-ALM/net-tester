@@ -3,8 +3,9 @@ package updates
 import "time"
 
 type Update struct {
-	PatternLength uint
-	BytesReceived uint64
-	BytesSent     uint64
-	RunTime       time.Duration
+	PatternLengthIn  uint
+	PatternLengthOut uint
+	BytesReceived    uint64
+	BytesSent        uint64
+	StartTime        time.Time
 }

@@ -1,27 +1,29 @@
 package services
 
+import "gitcove.com/alfred/net-tester/updates"
+
 type EchoService struct {
 	forward chan []byte
-	quit    chan struct{}
+	quit    *updates.Quitter
 }
 
-func (e *EchoService) init(quit chan struct{}) {
+func (e *EchoService) Init(quit *updates.Quitter, _ *updates.Update) {
 	e.quit = quit
 	e.forward = make(chan []byte)
 }
 
-func (e *EchoService) write(bytes []byte) {
+func (e *EchoService) Write(bytes []byte) {
 	select {
 	case e.forward <- bytes:
-	case <-e.quit:
+	case <-e.quit.Quitter():
 	}
 }
 
-func (e *EchoService) read() (bytes []byte) {
+func (e *EchoService) Read() (bytes []byte) {
 	select {
 	case bytes = <-e.forward:
-	case <-e.quit:
-		bytes = make([]byte, 0)
+	case <-e.quit.Quitter():
+		bytes = nil
 	}
 	return
 }

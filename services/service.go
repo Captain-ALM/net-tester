@@ -1,7 +1,9 @@
 package services
 
+import "gitcove.com/alfred/net-tester/updates"
+
 type Service interface {
-	init(quit chan struct{})
-	write([]byte)
-	read() []byte
+	Init(quit *updates.Quitter, updater *updates.Update)
+	Write([]byte)
+	Read() []byte
 }

@@ -8,7 +8,7 @@ COMMIT_DATE := $(shell git show -s --format=%ci ${HASH})
 BUILD_DATE := $(shell date '+%Y-%m-%d %H:%M:%S')
 VERSION := ${HASH}
 LD_FLAGS := -s -w -X 'main.buildVersion=${VERSION}' -X 'main.buildDate=${BUILD_DATE}' -X 'main.buildName=${PRODUCT_NAME}'
-COMP_BIN := go
+COMP_BIN := ${GOROOT}/bin/go
 
 ifeq ($(OS),Windows_NT)
 	BIN := $(BIN).exe
