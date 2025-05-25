@@ -80,7 +80,7 @@ func (c *CommandStruct) SetFlags(set *flag.FlagSet) {
 	set.BoolVar(&c.outputStats, "stats", false, "- : Output final statistics on exit.")
 	set.DurationVar(&c.outputInterval, "interval", time.Second*15, "duration : The interval between STDOUT writes, 0 to disable.")
 	set.DurationVar(&c.timeout, "timeout", 0, "duration : The timeout for sending or receiving.")
-	set.UintVar(&c.bufferSize, "buffer", 8, "size : The size of the receive buffer in bytes.")
+	set.UintVar(&c.bufferSize, "buffer", 1024, "size : The size of the receive buffer in bytes.")
 	if c.service == Pattern {
 		set.UintVar(&c.patternMin, "start", 1, "start : Pattern starting length.")
 		set.UintVar(&c.patternMax, "end", 1024, "end : Pattern max length.")

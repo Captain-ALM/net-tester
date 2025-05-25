@@ -13,8 +13,10 @@ func (e *EchoService) Init(quit *updates.Quitter, _ *updates.Update) {
 }
 
 func (e *EchoService) Write(bytes []byte) {
+	cBytes := make([]byte, len(bytes))
+	copy(cBytes, bytes)
 	select {
-	case e.forward <- bytes:
+	case e.forward <- cBytes:
 	case <-e.quit.Quitter():
 	}
 }

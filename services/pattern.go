@@ -2,7 +2,6 @@ package services
 
 import (
 	bytes2 "bytes"
-	"fmt"
 	"gitcove.com/alfred/net-tester/updates"
 )
 
@@ -29,18 +28,14 @@ func (p *PatternService) Write(bytes []byte) {
 		p.quit.Quit()
 		return
 	}
-	fmt.Println("+" + string(bytes))
 	if p.quit.Active() {
 		rBytes := make([]byte, 0, len(bytes)+len(p.cached))
 		rBytes = append(rBytes, p.cached...)
 		rBytes = append(rBytes, bytes...)
-		fmt.Println("=" + string(rBytes))
 		for len(rBytes)-int(p.currentLengthWrite) >= 0 && p.currentLengthWrite <= p.MaxLength {
 			cBytes := rBytes[:p.currentLengthWrite]
 			rBytes = rBytes[p.currentLengthWrite:]
 			p.update.PatternLengthIn = p.currentLengthWrite
-			fmt.Println("*" + string(cBytes))
-			fmt.Println("~" + string(p.getDataFromPattern(p.currentLengthWrite)))
 			if !bytes2.Equal(cBytes, p.getDataFromPattern(p.currentLengthWrite)) {
 				p.quit.Quit()
 				return
@@ -48,7 +43,6 @@ func (p *PatternService) Write(bytes []byte) {
 			p.currentLengthWrite++
 		}
 		p.cached = rBytes
-		fmt.Println("#" + string(p.cached))
 	}
 }
 

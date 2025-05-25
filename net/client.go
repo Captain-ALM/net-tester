@@ -35,7 +35,11 @@ func RunClient(conn net.Conn, service services.Service, quitter *updates.Quitter
 			if timeout > 0 {
 				_ = conn.SetWriteDeadline(time.Now().Add(timeout))
 			}
-			n, err := conn.Write(service.Read())
+			bytes := service.Read()
+			if bytes == nil {
+				return
+			}
+			n, err := conn.Write(bytes)
 			updater.BytesSent += uint64(n)
 			if err != nil {
 				quitter.Quit()
