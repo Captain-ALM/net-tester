@@ -44,6 +44,9 @@ func (p *PatternService) Write(bytes []byte) {
 		}
 		p.cached = rBytes
 	}
+	if p.currentLengthWrite >= p.MaxLength {
+		p.quit.Quit()
+	}
 }
 
 func (p *PatternService) Read() (read []byte) {
