@@ -66,13 +66,13 @@ func (c *CommandStruct) Usage() string {
 	if c.service == Pattern {
 		toReturn += " [-start <length>] [-end <length>] [-hex]"
 	}
-	toReturn += " <addr-family> <addr>"
+	toReturn += " <proto-addr-family> <addr>"
 	if c.service == Pattern {
 		toReturn += " <pattern>"
 	}
 	return toReturn + "\n  Run the " + string(c.service) + " service as a " + string(c.netType) +
 		`.
-  addr-family : The address family of the socket
+  proto-addr-family : The IP protocol and address family of the socket (tcp,tcp4/6,unix,unixpacket).
   addr : The address of the socket (Can include port).`
 }
 
@@ -103,7 +103,7 @@ func (c *CommandStruct) Execute(ctx context.Context, f *flag.FlagSet, args ...in
 		}
 	}()
 	if len(f.Args()) < 1 {
-		fmt.Fprintln(os.Stderr, "addr-family is required")
+		fmt.Fprintln(os.Stderr, "proto-addr-family is required")
 		return subcommands.ExitUsageError
 	} else {
 		c.addrFamily = f.Args()[0]
