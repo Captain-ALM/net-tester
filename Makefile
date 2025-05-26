@@ -34,7 +34,5 @@ clean:
 	rm -r -f dist/
 
 deploy: build
-	sudo systemctl stop "${PRODUCT_NAME}"
 	sudo cp "${BIN}" /usr/local/bin
-	sudo systemctl start "${PRODUCT_NAME}"
 
